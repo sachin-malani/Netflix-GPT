@@ -55,8 +55,6 @@ const Login = () => {
             photoUrl: photoURL,
           })
         );
-
-        navigate("/browse");
       }
     } else {
       const user = await firebaseSignIn(
@@ -65,7 +63,6 @@ const Login = () => {
       );
 
       if (user[1]) setErr(user[1]);
-      else navigate("/browse");
     }
   };
 

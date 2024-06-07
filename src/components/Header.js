@@ -4,17 +4,40 @@ import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { addUser, removeUser } from "../utils/userSlice";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoUrl: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+  }, []);
 
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => {
-        navigate("/");
-      })
+      .then(() => {})
       .catch((error) => {});
   };
 
@@ -29,36 +52,38 @@ const Header = () => {
           alt="netflix"
         />
       </div>
-      {user && <div className="relative">
-        <img
-          className="rounded-md cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
-          // src="https://occ-0-4994-2186.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABXMrBpySF8XZ8sCkWvT8aguR_wkRNG3R8T7iwBTsIkMyYwlB6it3SFUkQreUS4BP7yzuo542K7ZoPtOd13o6SbNT3mRrFQA.png?r=6a6"
-          src={user?.photoUrl}
-          width="24"
-          height="24"
-          alt=""
-          onMouseEnter={() => setIsDropDownVisible(true)}
-          onMouseLeave={() => setIsDropDownVisible(false)}
-        />
-        {isDropDownVisible && (
-          <div
-            className={`absolute top-full right-0 w-48 bg-black bg-opacity-80 text-white p-2 z-10 transition-opacity duration-300 ease-in-out ${
-              isDropDownVisible
-                ? "opacity-100"
-                : "opacity-0 pointer-events-none"
-            }`}
+      {user && (
+        <div className="relative">
+          <img
+            className="rounded-md cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
+            // src="https://occ-0-4994-2186.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABXMrBpySF8XZ8sCkWvT8aguR_wkRNG3R8T7iwBTsIkMyYwlB6it3SFUkQreUS4BP7yzuo542K7ZoPtOd13o6SbNT3mRrFQA.png?r=6a6"
+            src={user?.photoUrl}
+            width="24"
+            height="24"
+            alt=""
             onMouseEnter={() => setIsDropDownVisible(true)}
             onMouseLeave={() => setIsDropDownVisible(false)}
-          >
-            <button
-              className="block w-full text-left px-2 py-2 hover:underline rounded"
-              onClick={handleSignOut}
+          />
+          {isDropDownVisible && (
+            <div
+              className={`absolute top-full right-0 w-48 bg-black bg-opacity-80 text-white p-2 z-10 transition-opacity duration-300 ease-in-out ${
+                isDropDownVisible
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none"
+              }`}
+              onMouseEnter={() => setIsDropDownVisible(true)}
+              onMouseLeave={() => setIsDropDownVisible(false)}
             >
-              Sign Out
-            </button>
-          </div>
-        )}
-      </div>}
+              <button
+                className="block w-full text-left px-2 py-2 hover:underline rounded"
+                onClick={handleSignOut}
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
