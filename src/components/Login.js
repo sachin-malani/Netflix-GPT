@@ -1,19 +1,22 @@
 import { isValid } from "../utils/validation";
 import Header from "./Header";
 import { useRef, useState } from "react";
-// import {
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-// } from "firebase/auth";
-// import { auth } from "../utils/firebase";
 import { firebaseSignIn } from "../utils/signIn";
 import { firebaseSignUp } from "../utils/signUp";
+import { useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [err, setErr] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
+  const name = useRef(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggleSignInForm = () => setIsSignInForm(!isSignInForm);
 
@@ -24,52 +27,44 @@ const Login = () => {
     if (message) return;
 
     if (!isSignInForm) {
-      const user = await firebaseSignUp(email.current.value, password.current.value);
-      console.log(user);
+      const user = await firebaseSignUp(
+        email.current.value,
+        password.current.value
+      );
+
       if (user[1]) setErr(user[1]);
-      else console.log(user[0]);
-      // createUserWithEmailAndPassword(
-      //   auth,
-      //   email.current.value,
-      //   password.current.value
-      // )
-      //   .then((userCredential) => {
-      //     const user = userCredential.user;
-      //     console.log(user);
-      //   })
-      //   .catch((error) => {
-      //     const errorCode = error.code;
-      //     const errorMessage = error.message;
-      //     setErr(errorCode + ": " + errorMessage);
-      //   });
+      else {
+        await updateProfile(auth.currentUser, {
+          displayName: name.current.value,
+          photoURL: "https://avatars.githubusercontent.com/u/77013595?v=4",
+        });
+
+        const { uid, email, displayName, photoURL } = auth.currentUser;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoUrl: photoURL,
+          })
+        );
+
+        navigate("/browse");
+      }
     } else {
-      const user = await firebaseSignIn(email.current.value, password.current.value);
-      console.log(user);
+      const user = await firebaseSignIn(
+        email.current.value,
+        password.current.value
+      );
+
       if (user[1]) setErr(user[1]);
-      else console.log(user[0]);
-      // signInWithEmailAndPassword(
-      //   auth,
-      //   email.current.value,
-      //   password.current.value
-      // )
-      //   .then((userCredential) => {
-      //     const user = userCredential.user;
-      //     console.log(user);
-      //   })
-      //   .catch((error) => {
-      //     const errorCode = error.code;
-      //     const errorMessage = error.message;
-      //     setErr(errorCode + ": " + errorMessage);
-      //   });
+      else navigate("/browse");
     }
   };
 
   return (
     <div className="bg-[url('https://assets.nflxext.com/ffe/siteui/vlv3/dd4dfce3-1a39-4b1a-8e19-b7242da17e68/86742114-c001-4800-a127-c9c89ca7bbe4/IN-en-20240527-popsignuptwoweeks-perspective_alpha_website_large.jpg')] w-full h-[100vh] bg-cover bg-center bg-no-repeat">
       <Header />
-      {/* <div className="absolute z-0">
-        <img src="https://assets.nflxext.com/ffe/siteui/vlv3/dd4dfce3-1a39-4b1a-8e19-b7242da17e68/86742114-c001-4800-a127-c9c89ca7bbe4/IN-en-20240527-popsignuptwoweeks-perspective_alpha_website_large.jpg" />
-      </div> */}
 
       <div className="relative w-[450px] mx-auto my-8 px-16 py-12 text-white">
         <div className="absolute inset-0 bg-black opacity-80 rounded-md z-0"></div>
@@ -80,6 +75,7 @@ const Login = () => {
           <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
             {!isSignInForm && (
               <input
+                ref={name}
                 type="text"
                 placeholder="Full Name"
                 className="p-3 my-2 rounded-md bg-gray-900 opacity-80"
