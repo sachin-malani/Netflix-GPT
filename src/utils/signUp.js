@@ -1,5 +1,6 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
+import errorMessage from "./errorMessage"
 
 export const firebaseSignUp = async (email, password) => {
   try {
@@ -11,8 +12,8 @@ export const firebaseSignUp = async (email, password) => {
     const user = userCredential.user;
     return [user?.accessToken, null];
   } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    return [null, errorCode + ": " + errorMessage];
+    const errCode = error.code;
+    const errMessage = errorMessage(errCode)
+    return [null, errMessage];
   }
 };

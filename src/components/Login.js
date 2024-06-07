@@ -21,7 +21,14 @@ const Login = () => {
   const toggleSignInForm = () => setIsSignInForm(!isSignInForm);
 
   const handleButtonClick = async () => {
-    const message = isValid(email.current.value, password.current.value);
+    const message = isSignInForm
+      ? isValid("Sign In", email.current.value, password.current.value)
+      : isValid(
+          name.current.value,
+          email.current.value,
+          password.current.value
+        );
+  
     setErr(message);
 
     if (message) return;
