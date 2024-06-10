@@ -6,13 +6,16 @@ import SecondaryContainer from "./SecondaryContainer";
 const Browse = () => {
   useNowPlayingMovies();
   return (
-    <div className="">
-      <div className="flex items-center justify-between">
+    <div className="relative">
+      <div className="flex items-center justify-between relative z-20">
         <Header />
       </div>
-
-      <MainContainer />
-      <SecondaryContainer />
+      <div className="absolute -top-32 left-0 z-10">
+        <MainContainer />
+        <div className="">
+          <SecondaryContainer />
+        </div>
+      </div>
     </div>
   );
 };
