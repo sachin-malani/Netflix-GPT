@@ -12,7 +12,7 @@ const Browse = () => {
       </div>
       <div className="absolute -top-32 left-0 z-10">
         <MainContainer />
-        <div className="">
+        <div className="bg-black">
           <SecondaryContainer />
         </div>
       </div>

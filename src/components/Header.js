@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   return (
-    <div className="flex items-center justify-between mx-4 w-full">
+    <div className="flex items-center justify-between mx-20 w-full">
       <div>
         <img
           className="cursor-pointer"

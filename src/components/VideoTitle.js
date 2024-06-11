@@ -1,6 +1,6 @@
 const VideoTitle = ({ title, desc }) => {
   return (
-    <div className="px-6 absolute top-1/3 flex flex-col gap-4">
+    <div className="mx-20 absolute top-96 flex flex-col gap-4">
       <div className="w-96 font-bold text-3xl text-white">{title}</div>
       <div className="w-1/3 text-white">{desc}</div>
       <div className="flex gap-4">
