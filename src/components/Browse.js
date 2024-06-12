@@ -1,10 +1,16 @@
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
+import usePopularPlayingMovies from "../hooks/usePopularPlayingMovies";
+import useTopRatedMovies from "../hooks/useTopRatedMovies";
+import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
 import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
   useNowPlayingMovies();
+  usePopularPlayingMovies();
+  useTopRatedMovies();
+  useUpcomingMovies();
   return (
     <div className="relative">
       <div className="flex items-center justify-between relative z-20">

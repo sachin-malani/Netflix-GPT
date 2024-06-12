@@ -4,12 +4,23 @@ import {
   throttle,
 } from "../utils/Carousel";
 import MovieCard from "./MovieCard";
-const MovieList = ({ title, movies }) => {
-  const throttleProgressBar = throttle(() => {
-    document.querySelectorAll(".progress-bar").forEach(calculateProgressBar);
-  }, 250);
+import { useEffect } from "react";
 
-  window.addEventListener("resize", throttleProgressBar);
+const MovieList = ({ title, movies }) => {
+
+  document.querySelectorAll(".progress-bar").forEach(calculateProgressBar);
+
+  useEffect(() => {
+    const throttleProgressBar = throttle(() => {
+      document.querySelectorAll(".progress-bar").forEach(calculateProgressBar);
+    }, 250);
+
+    window.addEventListener("resize", throttleProgressBar);
+
+    return () => {
+      window.removeEventListener("resize", throttleProgressBar);
+    };
+  }, []);
 
   return (
     <div className="my-10 row">
@@ -18,10 +29,7 @@ const MovieList = ({ title, movies }) => {
         <div className="progress-bar"></div>
       </div>
       <div className="movie-container">
-        <button
-          className="handle left-handle"
-          onClick={(e) => handleCarouselClick(e)}
-        >
+        <button className="handle left-handle" onClick={handleCarouselClick}>
           <div className="text">&#8249;</div>
         </button>
         <div className="slider">
@@ -30,10 +38,7 @@ const MovieList = ({ title, movies }) => {
               <MovieCard key={movie.id} poster={movie.poster_path} />
             ))}
         </div>
-        <button
-          className="handle right-handle"
-          onClick={(e) => handleCarouselClick(e)}
-        >
+        <button className="handle right-handle" onClick={handleCarouselClick}>
           <div className="text">&#8250;</div>
         </button>
       </div>

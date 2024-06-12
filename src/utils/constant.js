@@ -4,6 +4,15 @@ export const USER_PROFILE =
 export const NOW_PLAYING_API =
   "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
 
+export const POPULAR_MOVIES_API =
+  "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+
+export const TOP_RATED_API =
+  "https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1";
+
+export const UPCOMING_MOVIE_API =
+  "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+
 export const API_OPTIONS = {
   method: "GET",
   headers: {
