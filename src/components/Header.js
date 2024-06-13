@@ -8,12 +8,16 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useDispatch } from "react-redux";
+import { toggleGPTSearch } from "../utils/gptSlice";
+import { SUPPORTED_LANGUAGES } from "../utils/constant";
+import { changePreferredLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const isGPT = useSelector((store) => store.gpt.showGPTSearch);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -43,8 +47,16 @@ const Header = () => {
       .catch((error) => {});
   };
 
+  const handleGPTSearchClick = () => {
+    dispatch(toggleGPTSearch());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changePreferredLanguage(e.target.value));
+  };
+
   return (
-    <div className="flex items-center justify-between mx-20 w-full">
+    <div className="relative flex items-center justify-between mx-20 w-full z-20">
       <div>
         <img
           className="cursor-pointer"
@@ -55,7 +67,25 @@ const Header = () => {
         />
       </div>
       {user && (
-        <div className="relative">
+        <div className="relative flex items-center gap-4">
+          {isGPT && (
+            <select
+              className="px-4 py-2 bg-black text-white border border-white rounded-sm"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option key={language.identifier} value={language.identifier}>
+                  {language.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="bg-red-600 px-4 py-2 text-white rounded-sm"
+            onClick={handleGPTSearchClick}
+          >
+            {isGPT ? "Home" : "GPT Search"}
+          </button>
           <img
             className="rounded-md cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
             src={user?.photoUrl}
