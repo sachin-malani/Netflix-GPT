@@ -32,3 +32,9 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "hindi", name: "Hindi" },
   { identifier: "spanish", name: "Spanish" },
 ];
+
+export const OPENAPI_KEY =
+  "";
+
+export const GPT_QUERY =
+  "Act as a Movie recommendation system and only give me the name of 5 movies, comma seperated like the example result given ahead. Example Result: Fast & Furious, Sholay, Interstellar, KGF, Golmaal Returns. Suggest some movies for the query ";

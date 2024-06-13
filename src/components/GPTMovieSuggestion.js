@@ -1,7 +1,10 @@
-const GPTMovieSuggestion = () => {
-  return (
-    <div>GPTMovieSuggestion</div>
-  )
-}
+import { useSelector } from "react-redux";
 
-export default GPTMovieSuggestion
+const GPTMovieSuggestion = () => {
+  const { gptSearchResult, movies } = useSelector((store) => store.gpt);
+  return (<div>
+    
+  </div>);
+};
+
+export default GPTMovieSuggestion;
