@@ -7,7 +7,6 @@ import MovieCard from "./MovieCard";
 import { useEffect } from "react";
 
 const MovieList = ({ title, movies }) => {
-
   document.querySelectorAll(".progress-bar").forEach(calculateProgressBar);
 
   useEffect(() => {

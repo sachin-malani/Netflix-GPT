@@ -6,7 +6,7 @@ const GPTSearchPage = () => {
   return (
     <div>
       <img
-        className="absolute"
+        className="fixed"
         alt="background"
         src={BACKGROUND_URL}
       />

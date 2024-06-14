@@ -16,8 +16,13 @@ const gptSlice = createSlice({
       state.gptSearchResult = movieNames;
       state.movies = result;
     },
+    removeMovieResult: (state) => {
+      state.gptSearchResult = null;
+      state.movies = null;
+    },
   },
 });
 
-export const { toggleGPTSearch, addGPTMovieResult } = gptSlice.actions;
+export const { toggleGPTSearch, addGPTMovieResult, removeMovieResult } =
+  gptSlice.actions;
 export default gptSlice.reducer;

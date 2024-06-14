@@ -26,7 +26,7 @@ const Browse = () => {
           <GPTSearchPage />
         </div>
       ) : (
-        <div className="absolute top-0 left-0 z-10">
+        <div className="absolute -top-32 left-0 z-10">
           <MainContainer />
           <div className="bg-black">
             <SecondaryContainer />

@@ -21,7 +21,7 @@ export const API_OPTIONS = {
   headers: {
     accept: "application/json",
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyY2FiNTRiYjRjNjYwOGQxM2Y1NTk4OWE1MzRkZTlhZSIsInN1YiI6IjY2NjNlMjZjNzEyMjM3ZTlmYjgyNTM4ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.cKwuvRGaZjA419Dh5kinSu33Oe7Afr5vdtHudpIZYqM",
+      "Bearer "+ process.env.REACT_APP_TMDB_KEY ,
   },
 };
 
@@ -33,8 +33,7 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "spanish", name: "Spanish" },
 ];
 
-export const OPENAPI_KEY =
-  "";
+export const OPENAPI_KEY = process.env.REACT_APP_OPENAPI_KEY;
 
 export const GPT_QUERY =
-  "Act as a Movie recommendation system and only give me the name of 5 movies, comma seperated like the example result given ahead. Example Result: Fast & Furious, Sholay, Interstellar, KGF, Golmaal Returns. Suggest some movies for the query ";
+  "Act as a Movie recommendation system and only give me the name of 10 movies, comma seperated like the example result given ahead. Example Result: Fast & Furious, Sholay, Interstellar, KGF, Golmaal Returns. Suggest some movies for the query ";

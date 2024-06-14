@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { toggleGPTSearch } from "../utils/gptSlice";
 import { SUPPORTED_LANGUAGES } from "../utils/constant";
 import { changePreferredLanguage } from "../utils/configSlice";
+import { removeMovieResult } from "../utils/gptSlice";
 
 const Header = () => {
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
@@ -42,6 +43,7 @@ const Header = () => {
   }, []);
 
   const handleSignOut = () => {
+    // dispatch(removeMovieResult());
     signOut(auth)
       .then(() => {})
       .catch((error) => {});
@@ -55,8 +57,12 @@ const Header = () => {
     dispatch(changePreferredLanguage(e.target.value));
   };
 
+  const handleClick = () => {
+    setIsDropDownVisible(!isDropDownVisible);
+  };
+
   return (
-    <div className="relative flex items-center justify-between mx-20 w-full z-20">
+    <div className="relative flex flex-col md:flex-row items-center justify-between md:mx-20 w-full z-20 ">
       <div>
         <img
           className="cursor-pointer"
@@ -67,7 +73,7 @@ const Header = () => {
         />
       </div>
       {user && (
-        <div className="relative flex items-center gap-4">
+        <div className="relative w-full flex justify-evenly md:justify-normal md:w-auto items-center gap-4">
           {isGPT && (
             <select
               className="px-4 py-2 bg-black text-white border border-white rounded-sm"
@@ -87,26 +93,17 @@ const Header = () => {
             {isGPT ? "Home" : "GPT Search"}
           </button>
           <img
-            className="rounded-md cursor-pointer transition-transform duration-300 ease-in-out transform hover:scale-105"
+            className="rounded-md cursor-pointer"
             src={user?.photoUrl}
             width="24"
             height="24"
             alt=""
-            onMouseEnter={() => setIsDropDownVisible(true)}
-            onMouseLeave={() => setIsDropDownVisible(false)}
+            onClick={handleClick}
           />
           {isDropDownVisible && (
-            <div
-              className={`absolute top-full right-0 w-48 bg-black bg-opacity-80 text-white p-2 z-10 transition-opacity duration-300 ease-in-out ${
-                isDropDownVisible
-                  ? "opacity-100"
-                  : "opacity-0 pointer-events-none"
-              }`}
-              onMouseEnter={() => setIsDropDownVisible(true)}
-              onMouseLeave={() => setIsDropDownVisible(false)}
-            >
+            <div className="absolute top-full left-3/4 w-3/4 bg-black text-white px-2 z-10">
               <button
-                className="block w-full text-left px-2 py-2 hover:underline rounded"
+                className="text-left px-2 py-2 hover:underline rounded"
                 onClick={handleSignOut}
               >
                 Sign Out
