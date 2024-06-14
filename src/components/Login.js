@@ -68,16 +68,16 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-[url('https://assets.nflxext.com/ffe/siteui/vlv3/dd4dfce3-1a39-4b1a-8e19-b7242da17e68/86742114-c001-4800-a127-c9c89ca7bbe4/IN-en-20240527-popsignuptwoweeks-perspective_alpha_website_large.jpg')] w-full h-[100vh] bg-cover bg-center bg-no-repeat">
+    <div className="bg-[url('https://assets.nflxext.com/ffe/siteui/vlv3/dd4dfce3-1a39-4b1a-8e19-b7242da17e68/86742114-c001-4800-a127-c9c89ca7bbe4/IN-en-20240527-popsignuptwoweeks-perspective_alpha_website_large.jpg')] w-full h-screen bg-cover bg-center bg-no-repeat">
       <Header />
 
-      <div className="relative w-[450px] mx-auto my-8 px-16 py-12 text-white">
-        <div className="absolute inset-0 bg-black opacity-80 rounded-md z-0"></div>
+      <div className="relative md:w-[450px] md:mx-auto my-8 px-16 py-12 text-white">
+        <div className="absolute inset-0 bg-black opacity-80 md:rounded-md z-0"></div>
         <div className="relative z-10">
-          <p className="mb-7 text-3xl font-bold">
+          <p className="mb-7 md:text-3xl font-bold">
             {isSignInForm ? "Sign In" : "Sign Up"}
           </p>
-          <form className="flex flex-col" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex flex-col w-[90%] md:w-full" onSubmit={(e) => e.preventDefault()}>
             {!isSignInForm && (
               <input
                 ref={name}
@@ -105,7 +105,7 @@ const Login = () => {
             >
               {isSignInForm ? "Sign In" : "Sign Up"}
             </button>
-            <div className="flex gap-1">
+            <div className="flex flex-col md:flex-row gap-1">
               <span className="opacity-80">
                 {isSignInForm ? "New to Netflix?" : "Already a user?"}
               </span>

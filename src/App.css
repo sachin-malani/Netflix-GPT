@@ -13,7 +13,8 @@ html {
 }
 
 :root {
-  --handle-size: 5rem;
+  --handle-size: 4.5rem;
+  --handle-size-mobile: 1rem;
   --img-gap: 0.25rem;
 }
 
@@ -95,6 +96,18 @@ html {
 .title {
   font-size: 2rem;
   margin: 0;
+}
+
+@media(max-width:600px){
+  .title{
+    font-size: 1rem;
+  }
+  .handle{
+    width: var(--handle-size-mobile);
+  }
+  .header-container{
+    padding: 0.5rem calc(var(--img-gap) * 2 + var(--handle-size-mobile));
+  }
 }
 
 .progress-bar {

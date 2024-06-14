@@ -7,12 +7,12 @@ import MovieCard from "./MovieCard";
 import { useEffect } from "react";
 
 const MovieList = ({ title, movies }) => {
-  document.querySelectorAll(".progress-bar").forEach(calculateProgressBar);
 
   useEffect(() => {
     const throttleProgressBar = throttle(() => {
       document.querySelectorAll(".progress-bar").forEach(calculateProgressBar);
     }, 250);
+    document.querySelectorAll(".progress-bar").forEach(calculateProgressBar);
 
     window.addEventListener("resize", throttleProgressBar);
 
@@ -22,7 +22,7 @@ const MovieList = ({ title, movies }) => {
   }, []);
 
   return (
-    <div className="my-10 row">
+    <div className="md:my-10 row">
       <div className="header-container">
         <p className="text-white font-bold title">{title}</p>
         <div className="progress-bar"></div>

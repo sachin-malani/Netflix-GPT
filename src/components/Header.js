@@ -1,6 +1,5 @@
 import logo from "../assets/logo.png";
 import { auth } from "../utils/firebase";
-import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -14,7 +13,6 @@ import { changePreferredLanguage } from "../utils/configSlice";
 import { removeMovieResult } from "../utils/gptSlice";
 
 const Header = () => {
-  const [isDropDownVisible, setIsDropDownVisible] = useState(false);
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
@@ -43,7 +41,7 @@ const Header = () => {
   }, []);
 
   const handleSignOut = () => {
-    // dispatch(removeMovieResult());
+    dispatch(removeMovieResult());
     signOut(auth)
       .then(() => {})
       .catch((error) => {});
@@ -55,10 +53,6 @@ const Header = () => {
 
   const handleLanguageChange = (e) => {
     dispatch(changePreferredLanguage(e.target.value));
-  };
-
-  const handleClick = () => {
-    setIsDropDownVisible(!isDropDownVisible);
   };
 
   return (
@@ -92,24 +86,12 @@ const Header = () => {
           >
             {isGPT ? "Home" : "GPT Search"}
           </button>
-          <img
-            className="rounded-md cursor-pointer"
-            src={user?.photoUrl}
-            width="24"
-            height="24"
-            alt=""
-            onClick={handleClick}
-          />
-          {isDropDownVisible && (
-            <div className="absolute top-full left-3/4 w-3/4 bg-black text-white px-2 z-10">
-              <button
-                className="text-left px-2 py-2 hover:underline rounded"
-                onClick={handleSignOut}
-              >
-                Sign Out
-              </button>
-            </div>
-          )}
+          <button
+            className="bg-red-600 px-4 py-2 text-white rounded-sm"
+            onClick={handleSignOut}
+          >
+            Signout
+          </button>
         </div>
       )}
     </div>
