@@ -18,6 +18,22 @@ html {
   --img-gap: 0.25rem;
 }
 
+.text-container {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+  max-height: calc(1.5em * 4);
+}
+
+@media(max-width: 768px){
+  .text-container{
+    display: none;
+  }
+}
+
 .movie-container {
   display: flex;
   justify-content: center;

@@ -56,7 +56,7 @@ const Header = () => {
   };
 
   return (
-    <div className="relative flex flex-col md:flex-row items-center justify-between md:mx-20 w-full z-20 ">
+    <div className="relative flex flex-col sm:flex-row md:flex-row items-center justify-between sm:mx-10 md:mx-20 w-full z-20 ">
       <div>
         <img
           className="cursor-pointer"
@@ -67,7 +67,7 @@ const Header = () => {
         />
       </div>
       {user && (
-        <div className="relative w-full flex justify-evenly md:justify-normal md:w-auto items-center gap-4">
+        <div className="relative w-full flex justify-evenly sm:justify-end md:justify-normal md:w-auto items-center gap-4">
           {isGPT && (
             <select
               className="px-4 py-2 bg-black text-white border border-white rounded-sm"
