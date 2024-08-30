@@ -16,6 +16,9 @@ export const TOP_RATED_API =
 export const UPCOMING_MOVIE_API =
   "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
 
+export const GET_ISP = "http://ip-api.com/json";
+export const ISP_JIO = "Reliance Jio Infocomm Limited";
+
 export const API_OPTIONS = {
   method: "GET",
   headers: {

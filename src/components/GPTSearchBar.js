@@ -3,7 +3,7 @@ import language from "../utils/language";
 import { useRef } from "react";
 import openai from "../utils/openai";
 import { API_OPTIONS, GPT_QUERY } from "../utils/constant";
-import { addGPTMovieResult } from "../utils/gptSlice";
+import { addGPTMovieResult, updateIsLoading } from "../utils/gptSlice";
 
 const GPTSearchBar = () => {
   const preferredLanguage = useSelector((store) => store.config.lang);
@@ -20,7 +20,8 @@ const GPTSearchBar = () => {
   };
 
   const handleGPTSearchClick = async () => {
-    console.log(searchText.current.value);
+    dispatch(updateIsLoading(true));
+    // console.log(searchText.current.value);
     const searchResult = await openai.chat.completions.create({
       messages: [
         { role: "user", content: GPT_QUERY + searchText.current.value },
@@ -28,7 +29,7 @@ const GPTSearchBar = () => {
       model: "gpt-3.5-turbo",
     });
     const gptMovies = searchResult?.choices?.[0]?.message?.content.split(", ");
-    console.log(gptMovies);
+    // console.log(gptMovies);
     const promiseArray = gptMovies.map((movie) => searchMovie(movie));
     const result = await Promise.all(promiseArray);
     console.log(result);
@@ -36,9 +37,9 @@ const GPTSearchBar = () => {
     //   arr.filter((movie) => gptMovies.includes(movie.title))
     // );
 
-    const filteredResult = result.map(arr => {
+    const filteredResult = result.map((arr) => {
       const seenTitles = new Set();
-      return arr.flat().filter(movie => {
+      return arr.flat().filter((movie) => {
         if (gptMovies.includes(movie.title) && !seenTitles.has(movie.title)) {
           seenTitles.add(movie.title);
           return true;
@@ -47,8 +48,11 @@ const GPTSearchBar = () => {
       });
     });
 
-    console.log(filteredResult);
-    dispatch(addGPTMovieResult({ movieNames: gptMovies, result: filteredResult }));
+    // console.log(filteredResult);
+    dispatch(
+      addGPTMovieResult({ movieNames: gptMovies, result: filteredResult })
+    );
+    dispatch(updateIsLoading(false));
   };
 
   return (
