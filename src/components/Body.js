@@ -7,7 +7,7 @@ import Banned from "./Banned";
 import useGetISP from "../hooks/useGetISP";
 
 const Body = () => {
-  useGetISP();
+  // useGetISP();
   const isp = useSelector((store) => store.config.isp);
 
   const appRouter = createBrowserRouter([
@@ -21,8 +21,8 @@ const Body = () => {
     },
   ]);
 
-  if(isp == null) return null;
-  if (isp === ISP_JIO) return <Banned />;
+  // if(isp == null) return null;
+  // if (isp === ISP_JIO) return <Banned />;
 
   return <RouterProvider router={appRouter} />;
 };

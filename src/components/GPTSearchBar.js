@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import language from "../utils/language";
 import { useRef } from "react";
 import openai from "../utils/openai";
-import { API_OPTIONS, GPT_QUERY } from "../utils/constant";
+import { API_OPTIONS, GET_GPT_RESULT, GPT_QUERY } from "../utils/constant";
 import { addGPTMovieResult, updateIsLoading } from "../utils/gptSlice";
 
 const GPTSearchBar = () => {
@@ -22,13 +22,14 @@ const GPTSearchBar = () => {
   const handleGPTSearchClick = async () => {
     dispatch(updateIsLoading(true));
     // console.log(searchText.current.value);
-    const searchResult = await openai.chat.completions.create({
-      messages: [
-        { role: "user", content: GPT_QUERY + searchText.current.value },
-      ],
-      model: "gpt-3.5-turbo",
+    
+    const data = await fetch(GET_GPT_RESULT,{
+      method: 'POST',
+      body: JSON.stringify({searchString: searchText.current.value})
     });
-    const gptMovies = searchResult?.choices?.[0]?.message?.content.split(", ");
+    const searchResult = await data.json();
+
+    const gptMovies = searchResult?.searchResult?.choices?.[0]?.message?.content.split(", ");
     // console.log(gptMovies);
     const promiseArray = gptMovies.map((movie) => searchMovie(movie));
     const result = await Promise.all(promiseArray);

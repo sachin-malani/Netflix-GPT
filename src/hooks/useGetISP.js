@@ -12,6 +12,8 @@ const useGetISP = () => {
 
   const getISP = async () => {
     const data = await fetch(GET_ISP);
+    console.log(data);
+    
     const isp = await data.json();
     dispatch(updateISP(isp.org));
   };

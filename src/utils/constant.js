@@ -16,7 +16,8 @@ export const TOP_RATED_API =
 export const UPCOMING_MOVIE_API =
   "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
 
-export const GET_ISP = "http://ip-api.com/json";
+export const GET_ISP = "https://netflix-backend.kichak.workers.dev/getISP";
+export const GET_GPT_RESULT = "https://netflix-backend.kichak.workers.dev/gptSearch";
 export const ISP_JIO = "Reliance Jio Infocomm Limited";
 
 export const API_OPTIONS = {
